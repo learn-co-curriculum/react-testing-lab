@@ -1,21 +1,30 @@
-import React from "react";
+import React from "react"
 
-function AddTransactionForm({postTransaction}) {
-  function submitForm(e){
-    e.preventDefault()
+function AddTransactionForm({ postTransaction }) {
+  function handleSubmit(event) {
+    event.preventDefault()
+    const form = event.currentTarget
+    const fd = new FormData(form)
+
+    const amountRaw = fd.get("amount")
+    const amount =
+      amountRaw !== null && amountRaw !== ""
+        ? Number(amountRaw).toFixed(2)
+        : amountRaw
+
     const newTransaction = {
-      date: e.target.date.value,
-      description: e.target.description.value,
-      category: e.target.category.value,
-      amount: e.target.amount.value
+      date: fd.get("date"),
+      description: fd.get("description"),
+      category: fd.get("category"),
+      amount,
     }
-    postTransaction(newTransaction)
 
+    postTransaction(newTransaction)
   }
 
   return (
     <div className="ui segment">
-      <form className="ui form" onSubmit={(e)=>{submitForm(e)}}>
+      <form className="ui form" onSubmit={handleSubmit}>
         <div className="inline fields">
           <input type="date" name="date" />
           <input type="text" name="description" placeholder="Description" />
@@ -27,7 +36,7 @@ function AddTransactionForm({postTransaction}) {
         </button>
       </form>
     </div>
-  );
+  )
 }
 
-export default AddTransactionForm;
+export default AddTransactionForm

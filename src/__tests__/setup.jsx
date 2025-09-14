@@ -1,17 +1,17 @@
-import { afterEach } from 'vitest'
+import { afterEach, vi } from 'vitest'
 import { cleanup } from '@testing-library/react'
 import '@testing-library/jest-dom/vitest'
-import fetch from 'node-fetch';
 
-  
-global.setFetchResponse = (val) => {
-    global.fetch = vi.fn(() => Promise.resolve({
-        json: () => Promise.resolve(val),
-        ok: true,
-        status: 200
-    }))
+global.setFetchResponse = (value) => {
+  global.fetch = vi.fn(() =>
+    Promise.resolve({
+      ok: true,
+      status: 200,
+      json: () => Promise.resolve(value),
+    })
+  )
 }
 
 afterEach(() => {
-    cleanup();
+  cleanup()
 })

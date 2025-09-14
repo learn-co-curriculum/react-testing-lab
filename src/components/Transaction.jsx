@@ -1,6 +1,6 @@
-import React from "react";
+import React from "react"
 
-function Transaction({transaction}) {
+function Transaction({ transaction }) {
   return (
     <tr>
       <td>{transaction.date}</td>
@@ -8,7 +8,7 @@ function Transaction({transaction}) {
       <td>{transaction.category}</td>
       <td>{transaction.amount}</td>
     </tr>
-  );
+  )
 }
 
-export default Transaction;
+export default Transaction
