@@ -83,6 +83,13 @@
       "description": "Venmo, Pay Roommate for Rent",
       "category": "Housing",
       "amount": -975
+    },
+    {
+      "id": "32ba",
+      "date": "2026-01-22",
+      "description": "light bill",
+      "category": "bill",
+      "amount": "100"
     }
   ]
 }
