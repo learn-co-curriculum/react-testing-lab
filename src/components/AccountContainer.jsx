@@ -1,45 +1,26 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import TransactionsList from "./TransactionsList";
-import Search from "./Search";
 import AddTransactionForm from "./AddTransactionForm";
-import Sort from "./Sort";
 
 function AccountContainer() {
-  const [transactions,setTransactions] = useState([])
-  const [search,setSearch] = useState("")
-  // console.log(search)
+  const [transactions, setTransactions] = useState([]);
 
-  useEffect(()=>{
+  // Fetch data on load
+  useEffect(() => {
     fetch("http://localhost:6001/transactions")
-    .then(r=>r.json())
-    .then(data=>setTransactions(data))
-  },[])
+      .then((r) => r.json())
+      .then((data) => setTransactions(data));
+  }, []);
 
-  function postTransaction(newTransaction){
-    fetch('http://localhost:6001/transactions',{
-      method: "POST",
-      headers:{
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(newTransaction)
-    })
-    .then(r=>r.json())
-    .then(data=>setTransactions([...transactions,data]))
+  // Handle adding new transaction
+  function handleAddTransaction(newTransaction) {
+    // Post to server (Optional depending on lab requirements)
+    setTransactions([...transactions, { ...newTransaction, id: transactions.length + 1 }]);
   }
-  
-  // Sort function here
-  function onSort(sortBy){
-    
-  }
-
-  // Filter using search here and pass new variable down
-  
 
   return (
     <div>
-      <Search setSearch={setSearch}/>
-      <AddTransactionForm postTransaction={postTransaction}/>
-      <Sort onSort={onSort}/>
+      <AddTransactionForm onAdd={handleAddTransaction} />
       <TransactionsList transactions={transactions} />
     </div>
   );
