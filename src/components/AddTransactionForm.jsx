@@ -3,11 +3,15 @@ import React from "react";
 function AddTransactionForm({postTransaction}) {
   function submitForm(e){
     e.preventDefault()
+    // Read values from the submitted form in a DOM-safe way.
+    const formData = new FormData(e.target)
+
+    // Build the payload expected by the transactions API.
     const newTransaction = {
-      date: e.target.date.value,
-      description: e.target.description.value,
-      category: e.target.category.value,
-      amount: e.target.amount.value
+      date: formData.get('date'),
+      description: formData.get('description'),
+      category: formData.get('category'),
+      amount: formData.get('amount')
     }
     postTransaction(newTransaction)
 
