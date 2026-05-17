@@ -1,17 +1,36 @@
-import { afterEach } from 'vitest'
-import { cleanup } from '@testing-library/react'
-import '@testing-library/jest-dom/vitest'
-import fetch from 'node-fetch';
+import { vi } from "vitest";
 
-  
-global.setFetchResponse = (val) => {
-    global.fetch = vi.fn(() => Promise.resolve({
-        json: () => Promise.resolve(val),
-        ok: true,
-        status: 200
-    }))
-}
+const mockTransactions = [
+  {
+    id: 1,
+    date: "2024-01-01",
+    description: "Salary",
+    category: "Income",
+    amount: 1000,
+  },
+  {
+    id: 2,
+    date: "2024-01-02",
+    description: "Groceries",
+    category: "Food",
+    amount: 200,
+  },
+];
 
-afterEach(() => {
-    cleanup();
-})
+global.fetch = vi.fn((url, options) => {
+  if (!options) {
+    // GET request
+    return Promise.resolve({
+      json: () => Promise.resolve(mockTransactions),
+    });
+  }
+
+  // POST request
+  return Promise.resolve({
+    json: () =>
+      Promise.resolve({
+        id: 999,
+        ...JSON.parse(options.body),
+      }),
+  });
+});
