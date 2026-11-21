@@ -1,21 +1,22 @@
 import React from "react";
 
-function AddTransactionForm({postTransaction}) {
-  function submitForm(e){
-    e.preventDefault()
+function AddTransactionForm({ postTransaction }) {
+  function submitForm(e) {
+    e.preventDefault();
+    // Read every named field from the form (works in browsers and in tests)
+    const formData = new FormData(e.target);
     const newTransaction = {
-      date: e.target.date.value,
-      description: e.target.description.value,
-      category: e.target.category.value,
-      amount: e.target.amount.value
-    }
-    postTransaction(newTransaction)
-
+      date: formData.get("date"),
+      description: formData.get("description"),
+      category: formData.get("category"),
+      amount: formData.get("amount"),
+    };
+    postTransaction(newTransaction);
   }
 
   return (
     <div className="ui segment">
-      <form className="ui form" onSubmit={(e)=>{submitForm(e)}}>
+      <form className="ui form" onSubmit={(e) => submitForm(e)}>
         <div className="inline fields">
           <input type="date" name="date" />
           <input type="text" name="description" placeholder="Description" />
